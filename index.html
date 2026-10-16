@@ -21,6 +21,7 @@
 
     <!-- Site linked files -->
     <link rel="stylesheet" href="styles.css">
+    <script type="module" src="calendar/my-calendar.js"></script>
 </head>
 
 <body>
@@ -119,9 +120,13 @@
     <div id="schedule_block" class="bg_grid_paper">
         <h2 class="sub_title">Розклад</h2>
         <p class="plain_text">Перевірте вільні години та оберіть комфортний час для заняття.</p>
-        <iframe
+
+           <my-calendar src="calendar/schedule.json"
+                work-hours="mon-sun 8:00-21:00"></my-calendar>
+
+        <!-- <iframe
             src="https://calendar.google.com/calendar/embed?height=600&wkst=2&ctz=Europe%2FKiev&mode=WEEK&hl=uk&title=%D0%A0%D0%BE%D0%B7%D0%BA%D0%BB%D0%B0%D0%B4&showCalendars=0&showPrint=0&src=dmlrYXBhbGloYXRhQGdtYWlsLmNvbQ&color=%23039be5"
-            style="border-width:0" width="100%" height="800" frameborder="0" scrolling="no"></iframe>
+            style="border-width:0" width="100%" height="800" frameborder="0" scrolling="no"></iframe> -->
     </div>
 
     <div id="pre_contacts_block" class="bg_green_plane"></div>

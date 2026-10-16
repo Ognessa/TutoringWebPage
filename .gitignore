@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+
+calendar/schedule.json
+
+.venv/
+__pycache__/
+*.pyc
+
+.DS_Store
+
+.vscode/
+.idea/
