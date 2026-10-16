@@ -1,8 +1,0 @@
-      - name: Sync schedule with Google Calendar
-        env:
-          ICAL_URL: ${{ secrets.ICAL_URL }}
-          CALENDAR_TZ: Europe/Warsaw
-          DAYS_BACK: "14"
-          DAYS_AHEAD: "60"
-          ALL_DAY_BUSY: "true"
-        run: python scripts/sync_calendar.py calendar/schedule.json

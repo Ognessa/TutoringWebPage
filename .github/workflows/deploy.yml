@@ -1,0 +1,57 @@
+name: sync schedule and publish
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # update every 6 hours
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Don't deploy two times in a row
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Upload site code
+        uses: actions/checkout@v5
+
+      - name: Install Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install library for iCal
+        run: pip install icalendar recurring-ical-events
+
+      - name: Update schedule with Google Calendar
+        env:
+          ICAL_URL: ${{ secrets.ICAL_URL }}
+          CALENDAR_TZ: Europe/Warsaw
+          DAYS_BACK: "14"
+          DAYS_AHEAD: "60"
+          ALL_DAY_BUSY: "true"
+        run: python scripts/sync_calendar.py calendar/schedule.json
+        # Left old version is schedule wasn't uploaded
+
+      - name: Prepare files
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+      - name: Publish on GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
